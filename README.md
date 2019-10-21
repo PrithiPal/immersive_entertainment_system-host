@@ -3,7 +3,7 @@
 
  1. Follow the instructions on [Gaming Target](https://csil-git1.cs.surrey.sfu.ca/cmpt433brownboyz/gaming-target)
 
- 1. Run following commands
+ 1. Run following commands from the parent folder of `gaming-libraries`
 ```shell
 //from host
 git clone https://csil-git1.cs.surrey.sfu.ca/cmpt433brownboyz/gaming-host
