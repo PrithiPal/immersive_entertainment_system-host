@@ -20,5 +20,8 @@ make
     1. Useful Links:
 	   1. https://docs.opencv.org/2.4/doc/tutorials/introduction/linux_install/linux_install.html
 	   1. https://stackoverflow.com/a/44488374
- 1. `apt-get install libopencv-dev`
- 1. ./build.sh
+ 1.
+ ```shell
+ apt-get install libopencv-dev
+ ./build.sh
+ ```
