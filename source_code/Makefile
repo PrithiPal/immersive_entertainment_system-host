@@ -1,0 +1,31 @@
+#compiler setup
+
+BEAGLEBONE_EXECUTABLE = sendScreenshot
+
+BEAGLEBONE_H_LIBRARIES = multicast.h
+ifdef jace
+	OUTPUTDIR = $(HOME)/Git/gaming-host
+else
+	OUTPUTDIR = $(HOME)/cmpt433/public/myApp
+endif
+CROSS_TOOL = arm-linux-gnueabihf-
+COMPILE_TOOL = g++
+CC_C = $(CROSS_TOOL)$(COMPILE_TOOL)
+CFLAGS = -Wall -g -D _POSIX_C_SOURCE=200809L -Werror
+OPENCV_LIBRARIES = `pkg-config opencv --cflags --libs`
+
+
+send = sendScreenshot
+
+all : $(send)
+
+% : %.cpp
+	cp ../../gaming-libraries/$(BEAGLEBONE_H_LIBRARIES) .
+	$(COMPILE_TOOL) $(CFLAGS) -o $(OUTPUTDIR)/$(BEAGLEBONE_EXECUTABLE) $< $(OPENCV_LIBRARIES)
+	rm $(BEAGLEBONE_H_LIBRARIES)
+
+
+
+clean :
+	rm -f $(OUTPUTDIR)/$(BEAGLEBONE_EXECUTABLE) || true
+	rm $(BEAGLEBONE_H_LIBRARIES) || true
