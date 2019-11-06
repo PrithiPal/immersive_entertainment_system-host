@@ -1,19 +1,6 @@
 # gaming-host
 
 
-## Setup for server-host.c  
-
- 1. Follow the instructions on [Gaming Target](https://csil-git1.cs.surrey.sfu.ca/cmpt433brownboyz/gaming-target)
-
- 1. Run following commands from the parent folder of `gaming-libraries`
-```shell
-//from host
-git clone https://csil-git1.cs.surrey.sfu.ca/cmpt433brownboyz/gaming-host
-cd gaming-host/
-make
-./gaming-pc
-```
-
 ## Setup for source_code/* contents
 
  1. Install the OpenCV2 on Linux
@@ -23,5 +10,6 @@ make
  1.
  ```shell
  apt-get install libopencv-dev
- ./build.sh
+cd source_code
+make
  ```
