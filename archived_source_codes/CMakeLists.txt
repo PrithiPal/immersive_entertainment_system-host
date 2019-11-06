@@ -8,9 +8,9 @@ set(FILENAMES
     displayImage
     )
 # ------------------------ SETTING COMPILATION OPTIONS  -------------------------
-set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/executable)
+set(EXECUTABLE_OUTPUT_PATH ~/cmpt433/public/project)
 set(CODEDIR source_code)
-set(EXECUTABLEDIR executables)
+set(EXECUTABLEDIR ~/cmpt433/public/project)
 set(DATADIR image_data )
 cmake_minimum_required(VERSION 2.8)
 project( image_processing )
