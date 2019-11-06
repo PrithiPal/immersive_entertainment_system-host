@@ -27,5 +27,5 @@ all : $(send)
 
 
 clean :
-	rm -f $(OUTPUTDIR)/$(BEAGLEBONE_EXECUTABLE)
+	rm -f $(OUTPUTDIR)/$(BEAGLEBONE_EXECUTABLE) || true
 	rm $(BEAGLEBONE_H_LIBRARIES) || true
