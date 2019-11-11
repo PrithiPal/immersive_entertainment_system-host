@@ -1,6 +1,6 @@
 #compiler setup
 
-BEAGLEBONE_EXECUTABLE = sendScreenshot
+BEAGLEBONE_EXECUTABLE = sendAverageScreenshot
 
 BEAGLEBONE_H_LIBRARIES = multicast.h
 ifdef jace
@@ -15,13 +15,16 @@ CFLAGS = -Wall -g -D _POSIX_C_SOURCE=200809L -Werror
 OPENCV_LIBRARIES = `pkg-config opencv --cflags --libs`
 
 
-send = sendScreenshot
+avg = sendAverageScreenshot
 
-all : $(send)
+dominant = sendDominantColorScreenshot
+
+
+all : $(dominant)
 
 % : %.cpp
 	cp ../../gaming-libraries/$(BEAGLEBONE_H_LIBRARIES) .
-	$(COMPILE_TOOL) $(CFLAGS) -o $(OUTPUTDIR)/$(BEAGLEBONE_EXECUTABLE) $< $(OPENCV_LIBRARIES)
+	$(COMPILE_TOOL) $(CFLAGS) -o $(OUTPUTDIR)/$@ $< $(OPENCV_LIBRARIES)
 	rm $(BEAGLEBONE_H_LIBRARIES)
 
 
