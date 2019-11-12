@@ -20,7 +20,7 @@ avg = sendAverageScreenshot
 dominant = sendDominantColorScreenshot
 
 
-all : $(dominant)
+all : $(dominant) $(avg)
 
 % : %.cpp
 	cp ../../gaming-libraries/$(BEAGLEBONE_H_LIBRARIES) .
@@ -30,5 +30,6 @@ all : $(dominant)
 
 
 clean :
-	rm -f $(OUTPUTDIR)/$(BEAGLEBONE_EXECUTABLE) || true
+	rm -f $(OUTPUTDIR)/$(avg) || true
+	rm -f $(OUTPUTDIR)/$(dominant) || true
 	rm $(BEAGLEBONE_H_LIBRARIES) || true
