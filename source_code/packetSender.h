@@ -1,4 +1,7 @@
 
+#ifndef _PACKET_SENDER_HEADER_
+#define _PACKET_SENDER_HEADER_
+
 static int DisplayImage_numberOfDigits(long number);
 
 void sendAverageColors(unsigned long **avgMatrix){
@@ -60,3 +63,5 @@ static int DisplayImage_numberOfDigits(long number){
 	}
 	return ++numberOfDigits;
 }
+
+#endif
