@@ -1,10 +1,9 @@
 #compiler setup
 
-BEAGLEBONE_EXECUTABLE = sendAverageScreenshot
 
 BEAGLEBONE_H_LIBRARIES = multicast.h
 ifdef jace
-	OUTPUTDIR = $(HOME)/Git/gaming-host
+	OUTPUTDIR = $(HOME)/Git/gaming-host/source_code
 else
 	OUTPUTDIR = $(HOME)/cmpt433/public/myApp
 endif
@@ -12,15 +11,10 @@ CROSS_TOOL = arm-linux-gnueabihf-
 COMPILE_TOOL = g++
 CC_C = $(CROSS_TOOL)$(COMPILE_TOOL)
 CFLAGS = -Wall -g -D _POSIX_C_SOURCE=200809L -Werror
-OPENCV_LIBRARIES = `pkg-config opencv --cflags --libs`
+OPENCV_LIBRARIES =  -lX11 `pkg-config --cflags opencv` `pkg-config --libs opencv`
 
 
-avg = sendAverageScreenshot
-
-dominant = sendDominantColorScreenshot
-
-
-all : $(dominant) $(avg)
+all : moodSetter
 
 % : %.cpp
 	cp ../../gaming-libraries/$(BEAGLEBONE_H_LIBRARIES) .
@@ -28,8 +22,6 @@ all : $(dominant) $(avg)
 	rm $(BEAGLEBONE_H_LIBRARIES)
 
 
-
 clean :
-	rm -f $(OUTPUTDIR)/$(avg) || true
-	rm -f $(OUTPUTDIR)/$(dominant) || true
+	rm -f $(OUTPUTDIR)/moodSetter || true
 	rm $(BEAGLEBONE_H_LIBRARIES) || true
