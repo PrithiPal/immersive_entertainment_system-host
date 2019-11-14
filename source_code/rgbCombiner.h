@@ -1,4 +1,6 @@
 
+#ifndef _RGB_COMBINER_
+#define _RGB_COMBINER_
 
 unsigned long convertPixelRGBToSingleValue(cv::Vec<unsigned char, 3>  dominantColor){
 
@@ -28,3 +30,5 @@ unsigned long convertPixelRGBToSingleValue(cv::Vec<unsigned char, 3>  dominantCo
 
 	//std::cout<<"("<<r<<", "<<r_hex<<"), ("<<g<<", "<<g_hex<<"), ("<<b<<", "<<b_hex<<") = ("<<concatenatedHex<<", "<<decimalvalueOfColor<<")"<<std::endl;
 }
+
+#endif
