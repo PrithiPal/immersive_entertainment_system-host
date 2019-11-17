@@ -4,6 +4,7 @@
 
 static int DisplayImage_numberOfDigits(long number);
 
+#define BEAGLE_IP "192.168.7.2"
 void sendAverageColors(unsigned long **avgMatrix){
 	int sd = socket(AF_INET, SOCK_DGRAM, 0);
 	printf("[server-host] L20 sd: %d\n", sd);
@@ -12,7 +13,9 @@ void sendAverageColors(unsigned long **avgMatrix){
 	memset(&addr, 0, sizeof(addr));
 	addr.sin_family = AF_INET;
 	addr.sin_port = htons(MULTICAST_PORT);
-	addr.sin_addr.s_addr = inet_addr(MULTICAST_ADDR);
+	//addr.sin_addr.s_addr = inet_addr(MULTICAST_ADDR);
+	addr.sin_addr.s_addr = inet_addr(BEAGLE_IP);
+
 	unsigned int addrlen = sizeof(addr);
 
 	char * messageToSend = new char[UDP_MESSAGE_SIZE];
