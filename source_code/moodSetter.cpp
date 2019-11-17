@@ -27,7 +27,7 @@ int main(int argc, char** argv ){
 	int mode = atoi(argv[1]);
 
 	while(1){
-		screenCapture screen(0,0,1400,700);
+		screenCapture screen(0,0,1280,768);
 		cv::Mat screenshotToSave;
 		// output the current frame to a output file.
 		// may slow down but for the testing purposes.
