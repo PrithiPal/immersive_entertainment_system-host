@@ -42,7 +42,8 @@ void sendDominantColor(unsigned long dominantColor){
 	memset(&addr, 0, sizeof(addr));
 	addr.sin_family = AF_INET;
 	addr.sin_port = htons(MULTICAST_PORT);
-	addr.sin_addr.s_addr = inet_addr(MULTICAST_ADDR);
+	addr.sin_addr.s_addr = inet_addr(BEAGLE_IP);
+	//addr.sin_addr.s_addr = inet_addr(MULTICAST_ADDR);
 	unsigned int addrlen = sizeof(addr);
 
 	char * messageToSend = new char[UDP_MESSAGE_SIZE];
