@@ -15,7 +15,6 @@
 #include "sendAverageScreenshot.h"
 #include "sendDominantColorScreenshot.h"
 #include "ScreenCapture.h"
-#include "pipe.h"
 #include "packetSender.h"
 
 #ifndef _MODE_3_H_
