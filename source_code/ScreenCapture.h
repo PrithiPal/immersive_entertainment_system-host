@@ -1,3 +1,6 @@
+#ifndef _SCREEN_CAPTURE_H_
+#define _SCREEN_CAPTURE_H_
+
 struct screenCapture{
 	Display* display;
 	Window root;
@@ -44,3 +47,5 @@ struct screenCapture{
 
 
 };
+
+#endif

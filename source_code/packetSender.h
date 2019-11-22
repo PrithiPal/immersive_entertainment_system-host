@@ -2,70 +2,46 @@
 #ifndef _PACKET_SENDER_HEADER_
 #define _PACKET_SENDER_HEADER_
 
-static int DisplayImage_numberOfDigits(long number);
+// being defined because of the following issue
+// https://stackoverflow.com/questions/5582211/what-does-define-gnu-source-imply
+// https://stackoverflow.com/questions/16927613/error-when-compiling-a-multicast-listener/42236615#42236615
+#ifndef _GNU_SOURCE
+#define _GNU_SOURCE
+#endif
 
-#define BEAGLE_IP "192.168.7.2"
-void sendAverageColors(unsigned long **avgMatrix){
-	int sd = socket(AF_INET, SOCK_DGRAM, 0);
-	printf("[server-host] L20 sd: %d\n", sd);
-	struct sockaddr_in addr;
+#include <stdio.h>
+#include <netdb.h>				// for creating sin
+#include <iostream>
 
-	memset(&addr, 0, sizeof(addr));
-	addr.sin_family = AF_INET;
-	addr.sin_port = htons(MULTICAST_PORT);
-	//addr.sin_addr.s_addr = inet_addr(MULTICAST_ADDR);
-	addr.sin_addr.s_addr = inet_addr(BEAGLE_IP);
+#include <arpa/inet.h>
 
-	unsigned int addrlen = sizeof(addr);
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-	char * messageToSend = new char[UDP_MESSAGE_SIZE];
-	int indexToWriteAt = 0;
-
-	for (int row = 0; row < 2; row++){
-		for (int col = 0; col < 2; col++){
-			sprintf(messageToSend+indexToWriteAt, "%ld, ", avgMatrix[row][col]);
-			indexToWriteAt+=DisplayImage_numberOfDigits(avgMatrix[row][col]);
-			indexToWriteAt+=2;
-		}
-	}
-	messageToSend[UDP_MESSAGE_SIZE-1]= 0;
-	std::cout<<"sending a packet[" << messageToSend << "]" << std::endl;
-	/*ssize_t res =*/ sendto(sd, messageToSend, UDP_MESSAGE_SIZE, 0, (struct sockaddr *) &addr, addrlen);
-}
+#include <stdlib.h>				// for srand
+#include <stdbool.h>
+#include <string.h>
+#include <ctype.h>
 
 
-void sendDominantColor(unsigned long dominantColor){
-	int sd = socket(AF_INET, SOCK_DGRAM, 0);
-	printf("[server-host] L20 sd: %d\n", sd);
-	struct sockaddr_in addr;
+#include <stdlib.h>
+#include <string.h>
 
-	memset(&addr, 0, sizeof(addr));
-	addr.sin_family = AF_INET;
-	addr.sin_port = htons(MULTICAST_PORT);
-	addr.sin_addr.s_addr = inet_addr(BEAGLE_IP);
-	//addr.sin_addr.s_addr = inet_addr(MULTICAST_ADDR);
-	unsigned int addrlen = sizeof(addr);
+struct UDP_ConnectionInformation{
+	struct sockaddr_in sinRemote;
+	int socketDescriptor;
+};
 
-	char * messageToSend = new char[UDP_MESSAGE_SIZE];
-	for (int i = 0; i < UDP_MESSAGE_SIZE; i++){
-		messageToSend[i]= ' ';
-	}
+void sendDominantColor(unsigned long dominantColor);
 
-	sprintf(messageToSend, "%ld",dominantColor);
-	messageToSend[UDP_MESSAGE_SIZE-1]= 0;
-	std::cout<<"sending a packet[" << messageToSend << "]" << std::endl;
-	/*ssize_t res =*/ sendto(sd, messageToSend, UDP_MESSAGE_SIZE, 0, (struct sockaddr *) &addr, addrlen);
-}
+void sendAverageColors(unsigned long **avgMatrix);
 
+void sendAverageColor(unsigned long averageColor);
 
+struct UDP_ConnectionInformation * UDP_setupConnection();
 
-static int DisplayImage_numberOfDigits(long number){
-	int numberOfDigits=0;
-	while (number / 10 != 0){
-		numberOfDigits++;
-		number /= 10;
-	}
-	return ++numberOfDigits;
-}
+char* UDP_receiveMessage(struct UDP_ConnectionInformation*info);
 
+void sendCombinedColors(unsigned long dominantColor, unsigned long **avgMatrix, unsigned long AveragePixelOfWholeScreen);
 #endif
