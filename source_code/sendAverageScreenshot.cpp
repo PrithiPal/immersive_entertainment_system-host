@@ -1,21 +1,5 @@
-#include <stdio.h>
-#include <opencv2/opencv.hpp>
-#include <chrono>
-#include <stdbool.h>
-
-#include <arpa/inet.h>
-
-#include <stdlib.h>
-#include <string.h>
-
-#include <stdio.h>
-#include "multicast.h"
-#include "packetSender.h"
+#include "sendAverageScreenshot.h"
 #include "rgbCombiner.h"
-
-unsigned long** createAverageArray(cv::Mat image, long numberOfElements);
-
-unsigned long calculateAverageOfSubet(long newRowIndex, long newColIndex, cv::Mat image, long numberOfRowsPerAvgCells, long numberOfColumnsPerAvgCells);
 
 unsigned long** createAverageArray(cv::Mat image, long numberOfElements){
 	long numberOfRowsPerAvgCells = image.rows / 2;
@@ -30,6 +14,20 @@ unsigned long** createAverageArray(cv::Mat image, long numberOfElements){
 	}
 
 	return avgArray;
+}
+
+unsigned long createAverageOfScreen(cv::Mat image){
+	unsigned long sum = 0;
+	int numOfEntries=0;
+	for (long originalMatrixRow =  0; originalMatrixRow < image.rows; originalMatrixRow++){
+		for (long originalMatrixCol = 0; originalMatrixCol < image.cols ; originalMatrixCol++){
+			unsigned long product = convertPixelRGBToSingleValue(image.at<cv::Vec3b>(originalMatrixRow,originalMatrixCol));
+			product = product * product;
+			sum+=product;
+			numOfEntries++;
+		}
+	}
+	return sqrt(sum / numOfEntries);
 }
 
 unsigned long calculateAverageOfSubet(long newRowIndex, long newColIndex, cv::Mat image, long numberOfRowsPerAvgCells, long numberOfColumnsPerAvgCells){
