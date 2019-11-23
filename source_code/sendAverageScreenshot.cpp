@@ -44,6 +44,8 @@ unsigned long calculateAverageOfSubet(long newRowIndex, long newColIndex, cv::Ma
 			numOfEntries++;
 		}
 	}
-	return sqrt(sum / numOfEntries);
+	unsigned long sqrtVal = sqrt(sum / numOfEntries);
+	printf("[sendAverageScreenshot.cpp calculateAverageOfSubet()] sqrtVal => %lud\n", sqrtVal);
+	return sqrtVal;
 
 }
