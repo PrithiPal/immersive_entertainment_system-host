@@ -32,15 +32,18 @@ int main(int argc, char** argv ){
 		// output the current frame to a output file.
 		// may slow down but for the testing purposes.
 		screen(screenshotToSave);
-
-		if (mode == 0){
+		if ( ( ( ( long ) screenshotToSave.rows ) * screenshotToSave.cols ) <= 0 ){
+			printf("Sceenshots dont contain any pixels, please re-run program\n");
+			return -2;
+		}
+		if ( mode == 0 ) {
 			long numberOfElements = 4;
 			unsigned long** avgMatrix = createAverageArray(screenshotToSave, numberOfElements);
 
 			sendAverageColors(avgMatrix);
 		}
 
-		if (mode == 1){
+		if (mode == 1) {
 
 			//hack done as the code for determining dominant color seems unable to work with the original image file
 			cv::imshow("screenshotToSave", screenshotToSave);
@@ -48,32 +51,38 @@ int main(int argc, char** argv ){
 
 			cv::Mat screenshotToProcess;
 			screenshotToProcess = cv::imread( "screen.jpg", 1 );
+			if ( ( ( ( long ) screenshotToProcess.rows ) * screenshotToProcess.cols ) <= 0 ){
+				printf("Sceenshots dont contain any pixels, please re-run program\n");
+				return -2;
+			}
 			/////////////////////////////////////////////////////////////////
 
-			std::cout<<"screenshotToProcess.rows : " << screenshotToProcess.rows << std::endl;
-			std::cout<<"screenshotToProcess.cols : " << screenshotToProcess.cols << std::endl;
+			//std::cout<<"screenshotToProcess.rows : " << screenshotToProcess.rows << std::endl;
+			//std::cout<<"screenshotToProcess.cols : " << screenshotToProcess.cols << std::endl;
 			long numberOfValues = ((long)screenshotToProcess.rows) * screenshotToProcess.cols;
-			std::cout<<"numberOfValues : " << numberOfValues << std::endl;
+			//std::cout<<"numberOfValues : " << numberOfValues << std::endl;
+			if (numberOfValues > 0){
 
 
 
-			cv::Mat reduced;
+				cv::Mat reduced;
 
-			reduceColor_kmeans(screenshotToProcess, reduced);
+				reduceColor_kmeans(screenshotToProcess, reduced);
 
-			std::map<cv::Vec3b, int, lessVec3b> palette = getPalette(reduced);
-			int area = screenshotToProcess.rows * screenshotToProcess.cols;
-			float largestArea = 0;
-			cv::Vec<unsigned char, 3>  dominantColor;
-		    for (auto color : palette)
-		    {
-				if (float(color.second) / float(area) > largestArea){
-					largestArea = float(color.second) / float(area);
-					dominantColor = color.first ;
+				std::map<cv::Vec3b, int, lessVec3b> palette = getPalette(reduced);
+				int area = screenshotToProcess.rows * screenshotToProcess.cols;
+				float largestArea = 0;
+				cv::Vec<unsigned char, 3>  dominantColor;
+				for (auto color : palette)
+				{
+					if (float(color.second) / float(area) > largestArea){
+						largestArea = float(color.second) / float(area);
+						dominantColor = color.first ;
+					}
 				}
-		    }
 
-			sendDominantColor(convertPixelRGBToSingleValue(dominantColor));
+				sendDominantColor(convertPixelRGBToSingleValue(dominantColor));
+			}
 		}
 		cv::waitKey(1);
 	}
